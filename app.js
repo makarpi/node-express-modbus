@@ -1,6 +1,9 @@
 const express = require('express');
 const path = require('path');
 
+// Moje Skrypty
+// const myModbus = require('./myModbus.js');
+
 // Init App
 const app = express();
 
