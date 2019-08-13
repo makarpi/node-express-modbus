@@ -2,57 +2,6 @@
 var ModbusRTU = require("modbus-serial");
 var client = new ModbusRTU();
 
-class Modbus {
-    constructor(slaveId){
-        this.slaveId = slaveId;
-    }
-}
-
-
-var modbusRegister = [
-    {
-        'nazwa': 'Prąd Silnika',
-        'rejestr': 0,
-        'wartosc': 10,
-        'jednostka': 'A',
-    },
-    {
-        'nazwa': 'Napięcie silnika',
-        'rejestr': 1,
-        'wartosc': 20,
-        'jednostka': 'A',
-    },
-    {
-        'nazwa': 'Prędkość silnika',
-        'rejestr': 2,
-        'wartosc': 30,
-        'jednostka': 'A',
-    },
-    {
-        'nazwa': 'Napięcie sieci',
-        'rejestr': 3,
-        'wartosc': 40,
-        'jednostka': 'A',
-    },
-    {
-        'nazwa': 'Prąd pobierany z sieci',
-        'rejestr': 4,
-        'wartosc': 50,
-        'jednostka': 'A',
-    },
-    {
-        'nazwa': 'Prąd pobierany z sieci',
-        'rejestr': 4,
-        'wartosc': 50,
-        'jednostka': 'A',
-    },
-    {
-        'nazwa': 'Prąd pobierany z sieci',
-        'rejestr': 4,
-        'wartosc': 50,
-        'jednostka': 'A',
-    },
-];
 
 // open connection to a serial port
 client.connectRTU("/dev/ttyUSB0", { baudRate: 9600 }, function(){
