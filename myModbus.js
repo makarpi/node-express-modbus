@@ -20,68 +20,56 @@ module.exports = {
     }
 }
 
+const setModbusRegisterValue = (address, value) => {
+    modbusRegister[address] = value;
+}
+
 // open connection to a serial port
 client.connectRTU("/dev/ttyS21", { baudRate: 9600 }, function(){
     console.log('Połączono z ModbusRTU');
   });
-  
-  client.setID(1);
-  
-  function write() {
-    //client.setID(1);
-  
-    // write the values 0, 0xffff to registers starting at address 5
-    // on device number 1.
-    client.writeRegisters(5, [0 , 0xffff])
-        .then(read(0,10));
-  }
-  
-  
-function read(startAddress, registerCount) {
-    // read the 2 registers starting at address 5
-    // on device number 1.
-    
-  }
+
+client.setTimeout(2000);
+
+// list of meter's id
+const modbusSlaveId = 1;
+const getMetersValue = async (modbusRegisters) => {
+    try{
+        // get value of all meters
+        for(let [i, modbus] of modbusRegisters.entries()) {
+            // output value to console
+            modbusRegister[i].wartosc = await getMeterValue(modbus.rejestr);
+            
+            console.log(modbus.wartosc);
+            // wait 100ms before get another device
+            await sleep(100);
+        }
+    } catch(e){
+        // if error, handle them here (it should not)
+        console.log(e)
+    } finally {
+        // after get all data from salve repeate it again
+        setImmediate(() => {
+            getMetersValue(modbusRegisters);
+        })
+    }
+}
+ 
+const getMeterValue = async (registerAddress) => {
+    try {
+        // set ID of slave
+        await client.setID(modbusSlaveId);
+        // read the 1 registers starting at address 0 (first register)
+        let val =  await client.readInputRegisters(registerAddress, 1);
+        // return the value
+        return val.data[0];
+    } catch(e){
+        // if error return -1
+        return -1
+    }
+}
 
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
- 
 
-const getRegisterValue = async () => {
-    try{
-        
-        // modbusRegister.forEach(element => {
-            
-            
-        // client.readHoldingRegisters(registerAddress, 1)
-        // .then(function(data){
-        //     //for(i = startAddress; i < registerCount; i++)
-        //     //modbusRegister[i].wartosc = data;
-        //     // console.log(modbusDane.data);
-        //     console.log(data.data);
-        //     await sleep(100);
-        // });
-        
-        // })   
-        for(let register of modbusRegister) {
-            console.assertlog(await client.readHoldingRegisters(register.rejestr, 1));
-
-            await sleep(100);
-                console.log('proboje')
-
-            // console.log(val);
-        }
-    }
-    catch(e) {
-        console.log(e);
-    }
-    
-}
-  
-var currentRequest = 0;
-var currentTimeout = 3000;
-
-setInterval(function(){
-    console.log('Odczyt rejestrów adres: ');
-    getRegisterValue();
-}, currentTimeout);
-  
+// start get value
+getMetersValue(modbusRegister);

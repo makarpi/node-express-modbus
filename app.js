@@ -10,17 +10,18 @@ const app = express();
 
 var myModbusik = require('./myModbus.js');
 
-myModbusik.addToRegister('Prąd silnika', 0, 10, 'A', 0);
-myModbusik.addToRegister('Napięcie silnika', 1, 10, 'V', 0);
-myModbusik.addToRegister('Prędkość silnika', 2, 10, 'rpm', 0);
-myModbusik.addToRegister('Napięcie sieci', 3, 10, 'V', 0);
-myModbusik.addToRegister('Prąd pobierany z sieci', 4, 10, 'A', 0);
-myModbusik.addToRegister('Prąd bla bla', 5, 10, 'A', 0);
-myModbusik.addToRegister('Prąd silnika', 6, 10, 'A', 0);
-myModbusik.addToRegister('Prąd silnika', 7, 10, 'A', 0);
-myModbusik.addToRegister('Prąd silnika', 8, 10, 'A', 0);
-myModbusik.addToRegister('Prąd silnika', 9, 10, 'A', 0);
-myModbusik.addToRegister('Prąd silnika', 10, 10, 'A', 0);
+myModbusik.addToRegister('ID urządzenia', 0, 10, '', 0);
+myModbusik.addToRegister('Moc bierna chwilowa', 1, 10, 'Var', 0);
+myModbusik.addToRegister('Moc czynna chwilowa', 2, 10, 'W', 0);
+myModbusik.addToRegister('Napięcie RMS fazy A', 3, 10, 'V', 0);
+myModbusik.addToRegister('Napięcie RMS fazy B', 4, 10, 'A', 0);
+myModbusik.addToRegister('Napięcie RMS fazy C', 5, 10, 'A', 0);
+myModbusik.addToRegister('Prąd RMS fazy A', 6, 10, 'A', 0);
+myModbusik.addToRegister('Prąd RMS fazy B', 7, 10, 'A', 0);
+myModbusik.addToRegister('Prąd RMS fazy C', 8, 10, 'A', 0);
+// myModbusik.addToRegister('Prąd silnika', 9, 10, 'A', 0);
+// myModbusik.addToRegister('Prąd silnika', 10, 10, 'A', 0);
+// myModbusik.addToRegister('Prąd silniczka', 11, 10, 'BLA', 0);
 
 //app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
